@@ -1,7 +1,7 @@
 #----------------------------------------------------------------------------#
 # Imports
 #----------------------------------------------------------------------------#
-
+#!/usr/bin/env python3
 from flask import Flask, render_template, request, send_file, render_template_string
 from flask_wtf.csrf import CSRFProtect
 from flask_wtf.csrf import CSRFError
@@ -53,6 +53,14 @@ def home():
 def about():
     return render_template('pages/placeholder.about.html')
 
+@app.route('/template-injection')
+def hello_ssti():
+    person = {'name':'world', 'secret': ", your third flag is hidden in /test"}
+    if request.args.get('name'):
+        person['name'] = request.args.get('name')
+    template = '''<h2> Hello %s </h2>''' %person['name']
+    return render_template_string(template, person=person)
+
 @app.route('/test')
 def test():
 	return render_template('pages/placeholder.test.html')
@@ -63,26 +71,27 @@ def return_files():
 		return send_file('plaintext.pdf', attachment_filename = 'plaintext.pdf')
 	except Exception as e:
 		return str(e)
-
-@app.route('/student/<path:shrine>')
 		
 @app.route('/login')
 def login():
     form = LoginForm(request.form)
     return render_template('forms/login.html', form=form)
     # return render_template_string("Hello World")
+    # return
 
 
 @app.route('/register')
 def register():
-    form = RegisterForm(request.form)
-    return render_template('forms/register.html', form=form)
+    # form = RegisterForm(request.form)
+    # return render_template('forms/register.html', form=form)
+    return render_template_string('Did you really think you could register? HAHAHAHA')
 
 
 @app.route('/forgot')
 def forgot():
-    form = ForgotForm(request.form)
-    return render_template('forms/forgot.html', form=form)
+    # form = ForgotForm(request.form)
+    # return render_template('forms/forgot.html', form=form)
+    return render_template_string('sorry, I kind of forgot about this page XD')
 
 # Error handlers.
 
@@ -114,7 +123,7 @@ if not app.debug:
     app.logger.info('errors')
 
 
-
+#app.jinja_env.globals['get_user_file'] = get_user_file # Allows for use in Jinja2 templates
 #----------------------------------------------------------------------------#
 # Launch.
 #----------------------------------------------------------------------------#
