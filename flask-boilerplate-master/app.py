@@ -2,7 +2,7 @@
 # Imports
 #----------------------------------------------------------------------------#
 
-from flask import Flask, render_template, request, send_file
+from flask import Flask, render_template, request, send_file, render_template_string
 from flask_wtf.csrf import CSRFProtect
 from flask_wtf.csrf import CSRFError
 # from flask.ext.sqlalchemy import SQLAlchemy
@@ -57,17 +57,20 @@ def about():
 def test():
 	return render_template('pages/placeholder.test.html')
 
-@app.route('/return-files/', methods = ('GET'))
+@app.route('/return-files/')
 def return_files():
 	try: 
 		return send_file('plaintext.pdf', attachment_filename = 'plaintext.pdf')
 	except Exception as e:
 		return str(e)
+
+@app.route('/student/<path:shrine>')
 		
 @app.route('/login')
 def login():
     form = LoginForm(request.form)
     return render_template('forms/login.html', form=form)
+    # return render_template_string("Hello World")
 
 
 @app.route('/register')
