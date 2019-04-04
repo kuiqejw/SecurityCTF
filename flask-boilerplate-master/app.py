@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 #----------------------------------------------------------------------------#
 # Imports
 #----------------------------------------------------------------------------#
@@ -10,7 +11,11 @@ import logging
 from logging import Formatter, FileHandler
 from forms import *
 import os
-
+from flask import Flask, render_template,request,redirect,make_response,session
+import sqlite3
+import os
+import hashlib
+import subprocess
 #----------------------------------------------------------------------------#
 # App Config.
 #----------------------------------------------------------------------------#
@@ -19,6 +24,7 @@ app = Flask(__name__)
 app.config.from_object('config')
 csrf = CSRFProtect()
 csrf.init_app(app)
+db = "storage.db"
 #db = SQLAlchemy(app)
 
 # Automatically tear down SQLAlchemy.
@@ -65,7 +71,22 @@ def hello_ssti():
 @app.route('/test')
 def test():
 	return render_template('pages/placeholder.test.html')
+	
+def getNews():
+    conn = sqlite3.connect('storage.db')
+    c=conn.cursor()
+    return c.execute("SELECT * FROM news").fetchall()
 
+@app.route('/news')
+def news():
+    term = request.args.get('text')
+    conn = sqlite3.connect('storage.db')
+    c=conn.cursor()
+    print(term)
+    c.execute("insert into news (source,text) values (?,?)",("guest",term))
+    conn.commit()
+    return render_template('pages/placeholder.test.html', name="guest",news=getNews())
+	
 @app.route('/return-files/')
 def return_files():
 	try: 
