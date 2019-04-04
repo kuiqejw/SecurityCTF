@@ -47,7 +47,7 @@ def login_required(test):
 
 @app.route('/')
 def home():
-    #return render_template('pages/placeholder.home.html')
+    # return render_template('pages/placeholder.home.html')
     return render_template('pages/placeholder.form.html')
 
 @app.route('/about')
@@ -61,6 +61,7 @@ def hello_ssti():
         person['name'] = request.args.get('name')
     template = '''<h2> Hello %s </h2>''' %person['name']
     return render_template_string(template, person=person)
+    # return render_template('pages/placeholder.inject.html', person=person)
 
 @app.route('/test')
 def test():
