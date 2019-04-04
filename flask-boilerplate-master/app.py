@@ -44,10 +44,13 @@ def login_required(test):
 # Controllers.
 #----------------------------------------------------------------------------#
 
-
 @app.route('/')
 def home():
-    # return render_template('pages/placeholder.home.html')
+    return render_template('pages/placeholder.home.html')
+
+
+@app.route('/button')
+def button():
     return render_template('pages/placeholder.button.html')
 
 @app.route('/about')
