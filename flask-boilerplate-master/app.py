@@ -44,13 +44,11 @@ def login_required(test):
 # Controllers.
 #----------------------------------------------------------------------------#
 
+
 @app.route('/')
 def home():
-    return render_template('pages/placeholder.home.html')
-
-@app.route('/button')
-def button():
-    return render_template('pages/placeholder.button.html')
+    #return render_template('pages/placeholder.home.html')
+    return render_template('pages/placeholder.form.html')
 
 @app.route('/about')
 def about():
@@ -63,7 +61,6 @@ def hello_ssti():
         person['name'] = request.args.get('name')
     template = '''<h2> Hello %s </h2>''' %person['name']
     return render_template_string(template, person=person)
-    # return render_template('pages/placeholder.inject.html', person=person)
 
 @app.route('/test')
 def test():
