@@ -48,7 +48,6 @@ def login_required(test):
 def home():
     return render_template('pages/placeholder.home.html')
 
-
 @app.route('/button')
 def button():
     return render_template('pages/placeholder.button.html')
@@ -62,7 +61,7 @@ def hello_ssti():
     person = {'name':'world', 'secret': ", your third flag is hidden in /test"}
     if request.args.get('name'):
         person['name'] = request.args.get('name')
-    template = '''<h2> Hello %s </h2>''' %person['name']
+    template = """<h2> Hello %s </h2>""" %person['name']
     return render_template_string(template, person=person)
     # return render_template('pages/placeholder.inject.html', person=person)
 
