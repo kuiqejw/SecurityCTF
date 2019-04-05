@@ -70,7 +70,7 @@ def hello_ssti():
 
 @app.route('/test')
 def test():
-	return render_template('pages/placeholder.test.html')
+	return render_template('pages/placeholder.download.html')
 	
 def getNews():
     conn = sqlite3.connect('storage.db')
