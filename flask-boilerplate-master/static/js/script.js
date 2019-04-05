@@ -35,7 +35,7 @@ window.onload = function() {
 		elem.style.marginLeft = "1.5px";
 		elem.style.marginRight = "1.5px";
 		elem.addEventListener("click", function(e) {
-			window.location.href = "http://127.0.0.1:5000/template-injection";
+			window.location.href = "http://seizthmng.herokuapp.com/template-injection";
 		}, false);
 		//elem.style.visibility = "hidden";
 		elem.style.opacity = "0";
