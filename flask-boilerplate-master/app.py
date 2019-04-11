@@ -62,13 +62,13 @@ def about():
 
 @app.route('/template-injection')
 def hello_ssti():
-    person = {'name':'world', 'secret': ", your third flag is hidden in /test"}
+    person = {'name':'world', 'secret': ", your third flag is hidden in /superultratopsecret"}
     if request.args.get('name'):
         person['name'] = request.args.get('name')
     template = '''<h2> Hello %s </h2>''' %person['name']
     return render_template_string(template, person=person)
 
-@app.route('/test')
+@app.route('/superultratopsecret')
 def test():
 	return render_template('pages/placeholder.test.html')
 	
